@@ -1,16 +1,20 @@
 package com.example.spring_weather_demo.services;
 
 import com.example.spring_weather_demo.repository.CityRepository;
+import com.example.spring_weather_demo.repository.WeatherDataRepository;
 import com.example.spring_weather_demo.weather.City;
+import com.example.spring_weather_demo.weather.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CityServices {
     @Autowired
     private CityRepository cityRepository;
+    private WeatherDataRepository weatherDataRepository;
 
 
     //Get all cities
@@ -48,6 +52,9 @@ public class CityServices {
        return false;
     }
 
+    public Optional<City> getCityByIdWithoutRe(Long cityId) {
+        return cityRepository.findById(cityId);
+    }
 }
 
 

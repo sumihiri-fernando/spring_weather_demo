@@ -3,9 +3,11 @@ package com.example.spring_weather_demo.controllers;
 
 import com.example.spring_weather_demo.services.CityServices;
 import com.example.spring_weather_demo.weather.City;
+import com.example.spring_weather_demo.weather.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,11 +34,28 @@ public City postCity(@RequestBody City city){
     // GET: /api/cities/{id}
 
     @GetMapping(path = "/{id}")
-public Optional<City>getOneCity(@PathVariable Long id){
-    return services.getCityById(id);
+    public String getOneCity(@PathVariable Long id) {
+        Optional<City> optionalCity = services.getCityById(id);
+        StringBuilder cityInfo = new StringBuilder();
 
-}
+        optionalCity.ifPresent(city -> {
+            cityInfo.append("City ID: ").append(city.getCityId()).append("\n");
+            cityInfo.append("City Name: ").append(city.getCityName()).append("\n");
+            cityInfo.append("Country ID: ").append(city.getCountryId()).append("\n");
 
+            List<Weather> weatherList = city.getWeatherList();
+
+            if (!weatherList.isEmpty()) {
+                Weather latestWeather = weatherList.get(weatherList.size() - 1);
+                cityInfo.append("Latest Condition: ").append(latestWeather.getCondition()).append("\n");
+                cityInfo.append("Latest Temperature: ").append(latestWeather.getTemperature()).append("\n");
+            } else {
+                cityInfo.append("No weather data available for this city.");
+            }
+        });
+
+        return cityInfo.toString();
+    }
 
 
 

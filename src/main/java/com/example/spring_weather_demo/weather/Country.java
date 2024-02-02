@@ -1,5 +1,3 @@
-// Country.java
-
 package com.example.spring_weather_demo.weather;
 
 import jakarta.persistence.Entity;
@@ -17,10 +15,17 @@ public class Country {
 
     // Constructors, Getters, and Setters
 
-    public Country() {
+    public Country(Long countryId, String countryName) {
+        this.countryId = countryId;
+        this.countryName = countryName;
     }
 
-    public Country(String countryName) {
+    public Country() {
+
+    }
+
+    public Country(String countryName)
+    {
         this.countryName = countryName;
     }
 

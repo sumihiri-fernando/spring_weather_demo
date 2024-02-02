@@ -1,9 +1,10 @@
 // City.java
 
 package com.example.spring_weather_demo.weather;
-// City.java
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class City {
@@ -14,12 +15,21 @@ public class City {
 
     private String cityName;
 
-    // Reference to the country's ID
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Weather> weatherList;
+
     private Long countryId;
 
     // Constructors, Getters, and Setters
 
+    public City(String cityName, int countryId) {
+        this.cityName = cityName;
+        this.countryId = (long) countryId;
+    }
+
     public City() {
+
     }
 
     public Long getCityId() {
@@ -45,4 +55,13 @@ public class City {
     public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
+
+    public List<Weather> getWeatherList() {
+        return weatherList;
+    }
+
+    public void setWeatherList(List<Weather> weatherList) {
+        this.weatherList = weatherList;
+    }
+
 }

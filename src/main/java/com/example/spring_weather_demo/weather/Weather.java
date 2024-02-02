@@ -1,5 +1,8 @@
-package com.example.spring_weather_demo.weather;// WeatherData.java
+// Weather.java
 
+package com.example.spring_weather_demo.weather;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,23 +14,25 @@ public class Weather {
 
     private String temperature;
 
+    @Column(name = "city_id")
+    private Long cityId;
+
     @Column(name = "weather_condition")
     private String condition;
 
-    private Long cityId;
+    @ManyToOne
+    @JoinColumn(name = "city_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private City city;
 
-    // Constructors
-
-    public Weather() {
-    }
-
-    public Weather(String temperature, String condition, Long cityId) {
+    public Weather(String temperature, String condition) {
         this.temperature = temperature;
         this.condition = condition;
-        this.cityId = cityId;
     }
 
-    // Getters and Setters
+    public Weather() {
+
+    }
 
     public Long getId() {
         return id;
@@ -53,15 +58,15 @@ public class Weather {
         this.condition = condition;
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     public Long getCityId() {
         return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public void setWeatherId(Long id) {
-        this.id=id;
     }
 }

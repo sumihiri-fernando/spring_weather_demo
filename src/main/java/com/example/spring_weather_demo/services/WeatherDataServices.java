@@ -22,7 +22,7 @@ public class WeatherDataServices {
 
 
 
-    //Get one weatherData by id
+    //Get one weatherData aby id
     public Optional<Weather> getWeatherDataById(Long id) {
         return weatherDataRepository.findById(id);
 
@@ -30,7 +30,7 @@ public class WeatherDataServices {
 
     //Update one weatherData
     public Weather updateWeatherData(Long id, Weather weather){
-        weather.setWeatherId(id);
+        weather.setId(id);
         return weatherDataRepository.save(weather);
     }
 
